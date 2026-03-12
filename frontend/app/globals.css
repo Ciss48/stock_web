@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+* { box-sizing: border-box; }
+
+body {
+  background: #030712;
+  color: #e2e8f0;
+  font-family: "IBM Plex Sans", "Segoe UI", ui-sans-serif, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+
+.market-row:hover td { background: rgba(255,255,255,0.025); }
+.market-row td { border-bottom: 1px solid #0f172a; transition: background 0.1s; }
+
+.recharts-cartesian-axis-tick-value { fill: #64748b !important; font-size: 11px; }
+.recharts-legend-item-text { color: #94a3b8 !important; font-size: 12px; }
