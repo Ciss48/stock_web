@@ -378,7 +378,7 @@ export default function FundamentalClient() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="q" tick={{ fill:"#64748b", fontSize:10 }} />
                 <YAxis domain={[0,45]} tick={{ fill:"#64748b", fontSize:10 }} width={32} tickFormatter={v=>`${v}%`} />
-                <Tooltip contentStyle={TT} formatter={(v:number) => [`${v.toFixed(1)}%`]} />
+                <Tooltip contentStyle={TT} formatter={(v:any) => [`${v.toFixed(1)}%`]} />
                 <Legend />
                 <Line dataKey="grossMargin" name="Gross Margin" stroke="#22c55e" strokeWidth={2} dot={false} />
                 <Line dataKey="ebitMargin"  name="EBIT Margin"  stroke="#f59e0b" strokeWidth={2} dot={false} />
@@ -422,7 +422,7 @@ export default function FundamentalClient() {
                           dataKey="value" label={({ percent }) => `${(percent*100).toFixed(0)}%`} labelLine={false}>
                           {data.map((_,i) => <Cell key={i} fill={DONUT_COLORS[i]} />)}
                         </Pie>
-                        <Tooltip contentStyle={TT} formatter={(v:number) => [`${vnd(v)} tỷ`]} />
+                        <Tooltip contentStyle={TT} formatter={(v:any) => [`${vnd(v)} tỷ`]} />
                       </PieChart>
                     </ResponsiveContainer>
                   </div>
@@ -435,7 +435,7 @@ export default function FundamentalClient() {
                     dataKey="value" label={({ name, percent }) => `${(percent*100).toFixed(0)}%`} labelLine={false}>
                     {DONUT_CURR.map((_,i) => <Cell key={i} fill={DONUT_COLORS[i]} />)}
                   </Pie>
-                  <Tooltip contentStyle={TT} formatter={(v:number) => [`${vnd(v)} tỷ`]} />
+                  <Tooltip contentStyle={TT} formatter={(v:any) => [`${vnd(v)} tỷ`]} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
@@ -450,7 +450,7 @@ export default function FundamentalClient() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="q" tick={{ fill:"#64748b", fontSize:9 }} />
                 <YAxis tick={{ fill:"#64748b", fontSize:9 }} width={45} tickFormatter={v=>`${(v/1000).toFixed(0)}k`} />
-                <Tooltip contentStyle={TT} formatter={(v:number) => [`${vnd(v)} tỷ`]} />
+                <Tooltip contentStyle={TT} formatter={(v:any) => [`${vnd(v)} tỷ`]} />
                 <Legend />
                 <Bar dataKey="equity" name="Vốn CSH" stackId="a" maxBarSize={24}>
                   {BALANCE.map((_,i) => (
@@ -480,7 +480,7 @@ export default function FundamentalClient() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="q" tick={{ fill:"#64748b", fontSize:9 }} />
                 <YAxis domain={[0,0.6]} tick={{ fill:"#64748b", fontSize:9 }} width={32} />
-                <Tooltip contentStyle={TT} formatter={(v:number) => [v.toFixed(2),"D/E"]} />
+                <Tooltip contentStyle={TT} formatter={(v:any) => [v.toFixed(2),"D/E"]} />
                 <ReferenceLine y={0.5} stroke="#f59e0b" strokeDasharray="4 2"
                   label={{ value:"0.5 (ngưỡng)", fill:"#f59e0b", fontSize:9 }} />
                 <Line dataKey="de" name="D/E" stroke="#f59e0b" strokeWidth={2} dot={{ fill:"#f59e0b", r:3 }} />
@@ -508,7 +508,7 @@ export default function FundamentalClient() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                   <XAxis dataKey="name" tick={{ fill:"#94a3b8", fontSize:11 }} />
                   <YAxis tick={{ fill:"#64748b", fontSize:10 }} width={50} tickFormatter={v=>vnd(v)} />
-                  <Tooltip contentStyle={TT} formatter={(v:number) => [`${vnd(v)} tỷ`]} />
+                  <Tooltip contentStyle={TT} formatter={(v:any) => [`${vnd(v)} tỷ`]} />
                   <Legend />
                   <Bar dataKey="current" name="Q3'25" fill="#22c55e" radius={[3,3,0,0]} maxBarSize={22} />
                   <Bar dataKey="prior"   name="Q2'25" fill="#64748b" radius={[3,3,0,0]} maxBarSize={22} />
@@ -536,7 +536,7 @@ export default function FundamentalClient() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="q" tick={{ fill:"#64748b", fontSize:10 }} />
                 <YAxis tick={{ fill:"#64748b", fontSize:10 }} width={45} />
-                <Tooltip contentStyle={TT} formatter={(v:number) => [`${vnd(v)} tỷ`,"FCF"]} />
+                <Tooltip contentStyle={TT} formatter={(v:any) => [`${vnd(v)} tỷ`,"FCF"]} />
                 <ReferenceLine y={0} stroke="#475569" />
                 <Bar dataKey="fcf" maxBarSize={20} radius={[3,3,0,0]}>
                   {FCF_DATA.map((d,i) => <Cell key={i} fill={d.fcf>=0?"#22c55e88":"#ef444488"} />)}
@@ -678,7 +678,7 @@ export default function FundamentalClient() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                   <XAxis dataKey="name" tick={{ fill:"#94a3b8", fontSize:12 }} />
                   <YAxis tick={{ fill:"#64748b", fontSize:10 }} width={32} tickFormatter={v=>`${v}%`} />
-                  <Tooltip contentStyle={TT} formatter={(v:number) => [`${v.toFixed(1)}%`]} />
+                  <Tooltip contentStyle={TT} formatter={(v:any) => [`${v.toFixed(1)}%`]} />
                   <Legend />
                   <Bar dataKey="current" name="Q3'25" fill="#22c55e" radius={[3,3,0,0]} maxBarSize={32} />
                   <Bar dataKey="prior"   name="Q2'25" fill="#64748b" radius={[3,3,0,0]} maxBarSize={32} />
@@ -688,7 +688,7 @@ export default function FundamentalClient() {
                   <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                   <XAxis dataKey="q" tick={{ fill:"#64748b", fontSize:9 }} />
                   <YAxis tick={{ fill:"#64748b", fontSize:9 }} width={32} tickFormatter={v=>`${v}%`} />
-                  <Tooltip contentStyle={TT} formatter={(v:number) => [`${v.toFixed(1)}%`]} />
+                  <Tooltip contentStyle={TT} formatter={(v:any) => [`${v.toFixed(1)}%`]} />
                   <Legend />
                   <Bar dataKey="roe" name="ROE" fill="#22c55e" radius={[3,3,0,0]} maxBarSize={16} />
                   <Bar dataKey="roa" name="ROA" fill="#3b82f6" radius={[3,3,0,0]} maxBarSize={16} />
@@ -705,7 +705,7 @@ export default function FundamentalClient() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
                 <XAxis dataKey="q" tick={{ fill:"#64748b", fontSize:9 }} />
                 <YAxis tick={{ fill:"#64748b", fontSize:9 }} width={45} tickFormatter={v=>vnd(v)} />
-                <Tooltip contentStyle={TT} formatter={(v:number) => [`${vnd(v)}₫`,"EPS"]} />
+                <Tooltip contentStyle={TT} formatter={(v:any) => [`${vnd(v)}₫`,"EPS"]} />
                 <Bar dataKey="eps" fill="#a78bfa44" maxBarSize={22} radius={[3,3,0,0]} />
                 <Line dataKey="eps" stroke="#a78bfa" strokeWidth={2} dot={{ fill:"#a78bfa",r:3 }} />
               </ComposedChart>
