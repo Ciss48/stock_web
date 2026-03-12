@@ -3,7 +3,7 @@
  * Used by:  API routes (→ client components call these routes)
  *           Server Components (imported directly, no HTTP hop)
  */
-import { supabase } from "./supabase";
+import { getSupabase } from "./supabase";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -37,8 +37,8 @@ function daysAgo(n: number) {
 
 export async function getMarketOverview() {
   const [{ data: snapshots }, { data: companies }] = await Promise.all([
-    supabase.from("market_daily_snapshot").select("*"),
-    supabase.from("companies").select("ticker, name, exchange, sectors(name)"),
+    getSupabase().from("market_daily_snapshot").select("*"),
+    getSupabase().from("companies").select("ticker, name, exchange, sectors(name)"),
   ]);
 
   const snapMap: Record<string, any> = {};
@@ -97,7 +97,7 @@ export async function getMarketSectors() {
 // ── Stock list ────────────────────────────────────────────────────────────────
 
 export async function getStocks() {
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("companies")
     .select("ticker, name, exchange, sectors(name)")
     .order("ticker");
@@ -118,12 +118,12 @@ export async function getStockDetail(ticker: string) {
   const t = ticker.toUpperCase();
 
   const [{ data: companies }, { data: snapshots }, { data: ratios }] = await Promise.all([
-    supabase
+    getSupabase()
       .from("companies")
       .select("ticker, name, exchange, sectors(name)")
       .eq("ticker", t),
-    supabase.from("market_daily_snapshot").select("*").eq("ticker", t),
-    supabase
+    getSupabase().from("market_daily_snapshot").select("*").eq("ticker", t),
+    getSupabase()
       .from("financial_ratios")
       .select("year, quarter, pe, pb, roe, roa, eps")
       .eq("ticker", t)
@@ -172,7 +172,7 @@ export async function getPriceHistory(ticker: string, start?: string, end?: stri
   const s = start ?? daysAgo(365);
   const e = end ?? today();
 
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("price_history")
     .select("date, open, high, low, close, volume")
     .eq("ticker", t)
@@ -205,14 +205,14 @@ export async function getTechnicalData(ticker: string, days = 90) {
   const start = daysAgo(days + 250); // extra lookback for indicator warm-up
 
   const [{ data: prices }, { data: indicators }] = await Promise.all([
-    supabase
+    getSupabase()
       .from("price_history")
       .select("date, open, high, low, close, volume")
       .eq("ticker", t)
       .gte("date", start)
       .order("date", { ascending: true })
       .range(0, 4999),
-    supabase
+    getSupabase()
       .from("technical_indicators")
       .select("date, sma20, sma50, sma200, ema20, bb_upper, bb_middle, bb_lower, rsi14, macd_line, macd_signal, macd_hist")
       .eq("ticker", t)
@@ -237,7 +237,7 @@ export async function getTechnicalData(ticker: string, days = 90) {
 
 export async function getIncome(ticker: string, quarters = 12) {
   const t = ticker.toUpperCase();
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("income_statement")
     .select("year, quarter, revenue, gross_profit, operating_profit, net_profit")
     .eq("ticker", t)
@@ -267,7 +267,7 @@ export async function getIncome(ticker: string, quarters = 12) {
 
 export async function getBalance(ticker: string, quarters = 12) {
   const t = ticker.toUpperCase();
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("balance_sheet")
     .select("year, quarter, total_assets, total_liabilities, total_equity, cash")
     .eq("ticker", t)
@@ -297,7 +297,7 @@ export async function getBalance(ticker: string, quarters = 12) {
 
 export async function getCashflow(ticker: string, quarters = 12) {
   const t = ticker.toUpperCase();
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("cash_flow")
     .select("year, quarter, operating_cf, investing_cf, financing_cf")
     .eq("ticker", t)
@@ -326,7 +326,7 @@ export async function getCashflow(ticker: string, quarters = 12) {
 
 export async function getRatios(ticker: string, quarters = 12) {
   const t = ticker.toUpperCase();
-  const { data } = await supabase
+  const { data } = await getSupabase()
     .from("financial_ratios")
     .select("year, quarter, pe, pb, roe, roa, eps, debt_to_equity, current_ratio")
     .eq("ticker", t)
@@ -361,7 +361,7 @@ export async function getComparePrices(tickers: string[], start: string, end?: s
 
   const results = await Promise.all(
     tickers.map(async (t) => {
-      const { data } = await supabase
+      const { data } = await getSupabase()
         .from("price_history")
         .select("date, close")
         .eq("ticker", t)
@@ -403,7 +403,7 @@ export async function getComparePrices(tickers: string[], start: string, end?: s
 export async function getCompareRatios(tickers: string[]) {
   const results = await Promise.all(
     tickers.map(async (t) => {
-      const { data } = await supabase
+      const { data } = await getSupabase()
         .from("financial_ratios")
         .select("year, quarter, pe, pb, roe, roa, eps, debt_to_equity")
         .eq("ticker", t)
