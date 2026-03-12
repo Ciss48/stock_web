@@ -1,10 +1,10 @@
-import { api } from "@/lib/api";
+import { getStocks } from "@/lib/db";
 import CompareClient from "@/components/CompareClient";
 
 export const revalidate = 3600;
 
 export default async function ComparePage() {
-  const stocksRes = await api.stocks().catch(() => ({ data: [] }));
+  const stocksRes = await getStocks().catch(() => ({ data: [] }));
   return (
     <div className="space-y-6">
       <div>

@@ -1,4 +1,4 @@
-import { api } from "@/lib/api";
+import { getStockDetail, getPriceHistory } from "@/lib/db";
 import { fmt, fmtVol, pctSign, pctClass, daysAgo } from "@/lib/utils";
 import { notFound } from "next/navigation";
 import CandlestickWrapper from "@/components/CandlestickWrapper";
@@ -11,8 +11,8 @@ export default async function StockPage({ params }: { params: Promise<{ ticker: 
   const t = ticker.toUpperCase();
 
   const [info, prices] = await Promise.all([
-    api.stock(t).catch(() => null),
-    api.prices(t, daysAgo(365)).catch(() => null),
+    getStockDetail(t).catch(() => null),
+    getPriceHistory(t, daysAgo(365)).catch(() => null),
   ]);
 
   if (!info) notFound();

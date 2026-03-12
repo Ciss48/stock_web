@@ -1,4 +1,5 @@
-import { api, SectorSummary } from "@/lib/api";
+import { getMarketOverview, getMarketSectors } from "@/lib/db";
+import { SectorSummary } from "@/lib/api";
 import { pctSign } from "@/lib/utils";
 import MarketTableClient from "@/components/MarketTableClient";
 
@@ -6,14 +7,14 @@ export const revalidate = 60;
 
 export default async function OverviewPage() {
   const [overviewRes, sectorsRes] = await Promise.all([
-    api.marketOverview().catch(() => ({ data: [], total: 0 })),
-    api.marketSectors().catch(() => ({ data: [] })),
+    getMarketOverview().catch(() => ({ data: [], total: 0 })),
+    getMarketSectors().catch(() => ({ data: [] })),
   ]);
 
   const stocks  = overviewRes.data;
   const sectors = sectorsRes.data;
-  const up      = stocks.filter(s => s.change_pct > 0).length;
-  const down    = stocks.filter(s => s.change_pct < 0).length;
+  const up      = stocks.filter((s: any) => s.change_pct > 0).length;
+  const down    = stocks.filter((s: any) => s.change_pct < 0).length;
   const flat    = stocks.length - up - down;
 
   return (
@@ -43,7 +44,7 @@ export default async function OverviewPage() {
       <div>
         <h2 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">Nhóm ngành</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {sectors.map(s => <SectorCard key={s.sector} s={s} />)}
+          {sectors.map((s: any) => <SectorCard key={s.sector} s={s} />)}
         </div>
       </div>
 
